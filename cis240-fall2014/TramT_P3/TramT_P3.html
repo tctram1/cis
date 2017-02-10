@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" href="TramT_P3.css" />
+<head>
+    <title>Project 3 by Tuyen Tram</title>
+
+    <!--/*
+    * Program: Project 3
+    * Programmer: Tuyen Tram
+    * Date: 10/6/14
+    * */-->
+
+    
+
+    <script>
+        //-----------------------------------------------------------------------
+        //Name: calculateResults()
+        //-----------------------------------------------------------------------
+        function calculateResults() {
+            console.log("calculateResults() function called")
+
+            //1. Declare variables
+                var hoursWorked,
+                    jobCategorySelectedIndex,
+                    jobCategory,
+                    hoursEligibleForBasePay,
+                    hoursEligibleForOvertimePay,
+                    basePayRate,
+                    basePayAmount,
+                    overtimePayRate,
+                    overtimePayAmount,
+                    totalPayAmount,
+                    displayString;
+
+            //2. Get values
+                hoursWorked = document.getElementById("txtHoursWorked").value;
+                console.log("hoursWorked = " + hoursWorked);
+
+                jobCategorySelectedIndex = document.getElementById("selEmploymentCategory").selectedIndex;
+                console.log("jobCategorySelectedIndex = " + jobCategorySelectedIndex);
+
+                jobCategory = document.getElementById("selEmploymentCategory").options[jobCategorySelectedIndex].value;
+                console.log("jobCategory = " + jobCategory);
+
+                totalPayAmount = parseFloat(totalPayAmount);
+                        
+            //3. Calculate
+                if (hoursWorked <= 40) {
+                    hoursEligibleForBasePay = hoursWorked;
+                } else {
+                    hoursEligibleForBasePay = 40;
+                }
+                console.log("hoursEligibleForBasePay = " + hoursEligibleForBasePay);
+                //No employee should be pay for more than 40 hours of base pay for the week
+                
+                if (hoursWorked <= 40) {
+                    hoursEligibleForOvertimePay = 0;
+                } else if (hoursWorked > 40, jobCategory == "M") {
+                    hoursEligibleForOvertimePay = 0;
+                } else if (hoursWorked > 40, jobCategory == "R") {
+                    hoursEligibleForOvertimePay = hoursWorked - 40;
+                } else if (hoursWorked > 40, jobCategory == "S") {
+                    hoursEligibleForOvertimePay = hoursWorked - 40;
+                }
+                console.log("hoursEligibleForOvertimePay = " + hoursEligibleForOvertimePay);
+                //Manager is not eligible for overtime pay
+                //Sales Rep and Staff are eligible for overtime pay
+
+                if (jobCategory == "M") {
+                    basePayRate = 25;
+                } else if (jobCategory == "R") {
+                    basePayRate = 20;
+                } else if (jobCategory == "S") {
+                    basePayRate = 15;
+                }
+                console.log("basePayRate = " + basePayRate);
+                //Rate for base pay for employee
+
+                if (jobCategory == "M") {
+                    basePayAmount = basePayRate * hoursEligibleForBasePay;
+                } else if (jobCategory == "R") {
+                    basePayAmount = basePayRate * hoursEligibleForBasePay;
+                } else if (jobCategory == "S") {
+                    basePayAmount = basePayRate * hoursEligibleForBasePay;
+                }
+                console.log("basePayAmount = " + basePayAmount);
+                //Base pay amount for employee
+
+                overtimePayRate = 1.5 * basePayRate;
+
+                if (jobCategory == "M") {
+                    overtimePayAmount = overtimePayRate * hoursEligibleForOvertimePay;
+                } else if (jobCategory == "R") {
+                    overtimePayAmount = overtimePayRate * hoursEligibleForOvertimePay;
+                } else if (jobCategory == "S") {
+                    overtimePayAmount = overtimePayRate * hoursEligibleForOvertimePay;
+                }
+                console.log("overtimePayAmount = " + overtimePayAmount);
+                //Overtime pay amount for employee
+
+                if (jobCategory == "M") {
+                    totalPayAmount = basePayAmount + overtimePayAmount;
+                } else if (jobCategory == "R") {
+                    totalPayAmount = basePayAmount + overtimePayAmount;
+                } else if (jobCategory == "S") {
+                    totalPayAmount = basePayAmount + overtimePayAmount;
+                }
+                console.log("totalPayAmount = " + totalPayAmount);
+                //Total pay amount for employee
+
+            //4. Display results
+                document.getElementById("divBasePay").innerHTML =
+                        "<left>$</left>" + " " + "<right>" + basePayAmount.toFixed(2) + "</right>";
+                document.getElementById("divOvertimePay").innerHTML =
+                        "<left>$</left>" + " " + "<right>" + overtimePayAmount.toFixed(2) + "</right>";
+                document.getElementById("divTotalPay").innerHTML =
+                        "<left>$</left>" + " " + "<right>" + totalPayAmount.toFixed(2) + "</right>";
+
+        }
+
+    </script>
+
+</head>
+<body>
+
+    <h1><center>Project 3 by Tuyen Tram</center></h1>
+    <center><img src="fallleaf.png" style="width: 300px;height: 30px" /></center>
+    </br>
+    </br>
+
+    <form id="frmInput">
+        <table>
+            <tr>
+                <td class="leftColumn">
+                    Number of Hours Worked
+                </td>
+
+                <td>
+                    <input type="text"
+                           id="txtHoursWorked"
+                           size="25" />
+                </td>
+            </tr>
+
+            <tr>
+                <td class="leftColumn">
+                    Employment Category
+                </td>
+
+                <td>
+                    <select id="selEmploymentCategory">
+                        <option selected value="">Please choose a category...</option>
+                        <option value="M">Manager</option>
+                        <option value="R">Sales Rep</option>
+                        <option value="S">Staff</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+
+                <td>
+                    <input type="button"
+                           id="butCalculatePay"
+                           value="Calculate Pay"
+                           onclick="calculateResults()" />
+                </td>
+            </tr>
+
+            <tr>
+                <td class="leftColumn">
+                    Base Pay
+                </td>
+
+                <td>
+                    <div id="divBasePay"></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="leftColumn">
+                    Overtime Pay
+                </td>
+
+                <td>
+                    <div id="divOvertimePay"></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="leftColumn">
+                    Total Pay
+                </td>
+
+                <td>
+                    <div id="divTotalPay"></div>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</body>
+</html>

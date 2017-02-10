@@ -1,0 +1,66 @@
+﻿body {
+            background-color: #f2efd3;
+        }
+
+        h1 {
+            font-family: 'Giddyup Std', sans-serif;
+            font-size: 40pt;
+            color: #897d14;
+        }
+
+        table {
+            background-color: #d1d595;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            border: dashed;
+            border-width: 3px;
+            border-radius: 10px;
+            border-color: #8a1e08;
+            color: #80857e;
+        }
+
+        .leftColumn {
+            font-family: 'Buxton Sketch';
+            font-size: 20pt;
+            color: #b32408;
+        }
+
+        #txtHoursWorked {
+            font-family: 'Buxton Sketch';
+            font-size: 12pt;
+            color: #7d5815;
+            border: solid;
+            border-width: 1px;
+            border-color: #ff9400;
+            border-radius: 10px;
+        }
+
+        #selEmploymentCategory {
+            font-family: 'Buxton Sketch';
+            font-size: 12pt;
+            color: #7d5815;
+            border: solid;
+            border-width: 1px;
+            border-color: #ff9400;
+            border-radius: 10px;
+        }
+
+        #butCalculatePay {
+            background-color: transparent;
+            font-family: 'Buxton Sketch';
+            font-size: 16pt;
+            color: #ff9400;
+            border: solid;
+            border-width: 1px;
+            border-radius: 10px;
+        }
+
+        div {
+            font-family: 'Buxton Sketch';
+            font-size: 16pt;
+            color: #7d5815;
+        }
