@@ -1,0 +1,287 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Project 2 by Tuyen Tram</title>
+
+    <!--/*
+    * Program: Project 2
+    * Programmer: Tuyen Tram
+    * Date: 10/6/14
+    * Description: Second project, javescript, calculate car rental fee, table,
+    * select elements, text boxes,
+    * has Calculate button.
+    * */--> 
+
+    <script>
+        function calculateResult() {
+            console.log("calculateResult() function called");
+
+            //1. Declare variables
+            var employeeName,
+                selectElementSelectedIndex,
+                selectElementAbbrev,
+                beginningOdometerReading,
+                endingOdometerReading,
+                numberOfDaysUsed,
+                milesDriven,
+                baseRateAmount,
+                baseRateCharge,
+                mileageAmount,
+                mileageCharge,
+                insuranceAmount,
+                insuranceDailyRate,
+                carRentalFee,
+                amountOfSalesTax,
+                salesTaxRate,
+                totalCarRentalAmount;
+
+            //2. Get values
+            //Get Select Element choice
+            selectElementSelectedIndex = document.getElementById("selEmployeeName").selectedIndex;
+            console.log("selectElementSelectedIndex = " + selectElementSelectedIndex);
+
+            selectElementAbbrev = document.getElementById("selEmployeeName").options[selectElementSelectedIndex].value;
+            console.log("selectElementAbbrev = " + selectElementAbbrev);
+
+            employeeName = document.getElementById("selEmployeeName").value;
+            console.log("employeeName = " + employeeName);
+
+            beginningOdometerReading = document.getElementById("txtBeginningOdometerReading").value;
+            console.log("beginningOdometerReading = " + beginningOdometerReading);
+
+            endingOdometerReading = document.getElementById("txtEndingOdometerReading").value;
+            console.log("endingOdometerReading = " + endingOdometerReading);
+
+            numberOfDaysUsed = document.getElementById("txtNumberOfDaysUsed").value;
+            console.log("numberOfDaysUsed = " + numberOfDaysUsed);
+
+            baseRateCharge = 30; //$30 per day
+            console.log("baseRateCharge = " + baseRateCharge);
+
+            mileageCharge = .29; //$0.29 per mile
+            console.log("mileageCharge = " + mileageCharge);
+
+            insuranceDailyRate = 9; //$9 per day
+            console.log("insuranceDailyRate = " + insuranceDailyRate);
+
+            salesTaxRate = .0775; //7.75%
+            console.log("salesTaxRate = " + salesTaxRate);
+
+            beginningOdometerReading = parseFloat(beginningOdometerReading);
+            endingOdometerReading = parseFloat(endingOdometerReading);
+            numberOfDaysUsed = parseFloat(numberOfDaysUsed);
+            milesDriven = parseFloat(milesDriven);
+            baseRateAmount = parseFloat(baseRateAmount);
+            baseRateCharge = parseFloat(baseRateCharge);
+            mileageAmount = parseFloat(mileageAmount);
+            mileageCharge = parseFloat(mileageCharge);
+            insuranceAmount = parseFloat(insuranceAmount);
+            insuranceDailyRate = parseFloat(insuranceDailyRate);
+            carRentalFee = parseFloat(carRentalFee);
+            amountOfSalesTax = parseFloat(amountOfSalesTax);
+            salesTaxRate = parseFloat(salesTaxRate);
+            totalCarRentalAmount = parseFloat(totalCarRentalAmount);
+            
+            //3. Calculate
+            milesDriven = endingOdometerReading - beginningOdometerReading;
+            console.log("milesDriven = " + milesDriven);
+
+            baseRateAmount = baseRateCharge * numberOfDaysUsed;
+            console.log("baseRateAmount = " + baseRateAmount);
+
+            mileageAmount = mileageCharge * milesDriven;
+            console.log("mileageAmount = " + mileageAmount);
+
+            insuranceAmount = insuranceDailyRate * numberOfDaysUsed;
+            console.log("insuranceAmount = " + insuranceAmount);
+
+            carRentalFee = baseRateAmount + mileageAmount + insuranceAmount;
+            console.log("carRentalFee = " + carRentalFee);
+
+            amountOfSalesTax = salesTaxRate * carRentalFee;
+            console.log("amountOfSalesTax = " + amountOfSalesTax);
+
+            totalCarRentalAmount = carRentalFee + amountOfSalesTax;
+            console.log("totalCarRentalAmount = " + totalCarRentalAmount);
+
+            //4. Display results
+            document.getElementById("divEmployeeName").innerHTML = employeeName;
+            document.getElementById("divMilesDriven").innerHTML = milesDriven;
+            document.getElementById("divBaseRateAmount").innerHTML = baseRateAmount;
+            document.getElementById("divMileageAmount").innerHTML = mileageAmount;
+            document.getElementById("divInsuranceAmount").innerHTML = insuranceAmount;
+            document.getElementById("divCarRentalFee").innerHTML = carRentalFee;
+            document.getElementById("divAmountOfSalesTax").innerHTML = amountOfSalesTax;
+            document.getElementById("divTotalCarRentalAmount").innerHTML = totalCarRentalAmount;
+        }
+    </script>
+
+    <link rel="stylesheet" href="TramT_P2.css" />
+
+</head>
+
+<body>
+
+    <h1><center>Project 2 by Tuyen Tram</center></h1>
+    <hr width="100%" />
+
+    <form name="frmInput">
+        <div id="myDiv1">
+            <h2>Project 2</h2>
+
+            <table>
+                <tr>
+                    <td>
+                        Employee Name
+                    </td>
+                    
+                    <td>
+                        <select id="selEmployeeName">
+                            <option selected value=""> Please choose an employee name...</option>
+                            <option value="Alfred">Alfred</option>
+                            <option value="Beth">Beth</option>
+                            <option value="Dan">Dan</option>
+                            <option value="Erin">Erin</option>
+                            <option value="Peggy">Peggy</option>
+                            <option value="Suan">Susan</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Beginning Odometer Reading
+                    </td>
+
+                    <td>
+                        <input type="text"
+                               id="txtBeginningOdometerReading"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Ending Odometer Reading
+                    </td>
+
+                    <td>
+                        <input type="text"
+                               id="txtEndingOdometerReading"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Number of Days Car was Used
+                    </td>
+
+                    <td>
+                        <input type="text"
+                               id="txtNumberOfDaysUsed"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+
+                    <td>
+                        <input type="button"
+                               id="butCalcalteResult"
+                               class="myButton"
+                               value="Calculate"
+                               onclick="calculateResult()" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="myDiv2">
+            <h2>Results:</h2>
+
+            <table>
+                <tr>
+                    <td>
+                        Employee Name
+                    </td>
+
+                    <td>
+                        <div id="divEmployeeName"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Miles Driven
+                    </td>
+
+                    <td>
+                        <div id="divMilesDriven"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Base Rate Amount
+                    </td>
+
+                    <td>
+                        <div id="divBaseRateAmount"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Mileage Amount
+                    </td>
+
+                    <td>
+                        <div id="divMileageAmount"></div>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        Insurance Amount
+                    </td>
+
+                    <td>
+                        <div id="divInsuranceAmount"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Car Rental Fee
+                    </td>
+
+                    <td>
+                        <div id="divCarRentalFee"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Amount of Sales Tax
+                    </td>
+
+                    <td>
+                        <div id="divAmountOfSalesTax"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Total Car Rental Amount
+                    </td>
+
+                    <td>
+                        <div id="divTotalCarRentalAmount"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+
+</body>
+</html>
