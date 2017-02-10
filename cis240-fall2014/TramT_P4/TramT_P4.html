@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" href="TramT_P4.css" />
+<head>
+    <title>Project 4 by Tuyen Tram</title>
+
+    <!--/*
+    * Program: Project 4
+    * Programmer: Tuyen Tram
+    * Date:  11/18/14
+    * */-->
+
+    <script>
+
+        //Global variables
+        var currentLat,
+            currentLong;
+
+        //-------------------------------------------------------------------------------
+        // Name: displayResults()
+        //-------------------------------------------------------------------------------
+
+        function displayCurrentLocation() {
+
+            console.log("displayCurrentLocation function called!");
+
+            //Call getCurrentPosition() method to retrieve current position data
+            //This is an asynchronous call. 
+            //When completed it calls the cb_GetCurrentPosition_Success callback function
+            navigator.geolocation.watchPosition(cb_GetCurrentPosition_Success);
+
+        }
+
+
+
+        //-------------------------------------------------------------------------------
+        // Name:            cb_GetCurrentPosition_Success
+        // Description:     Callback function if GeoLocation info retrieved successfully
+        //-------------------------------------------------------------------------------
+
+        function cb_GetCurrentPosition_Success(positionObject) {
+
+            console.log("cb_GetCurrentPosition_Success callback function called!");
+
+            //Show returned positionObject in Inspect Element Console
+            console.dir(positionObject);
+
+            //1. Declare variables 
+            
+            //2. Get values
+
+            //Extract geolocation data from returned object
+            currentLat = positionObject.coords.latitude;
+            currentLong = positionObject.coords.longitude;
+            console.log("currentLat = " + currentLat);
+            console.log("currentLong = " + currentLong);
+
+            //3. Calculation
+
+            //4. Display
+            document.getElementById("divCurrentLat").innerHTML = currentLat.toFixed(6);
+            document.getElementById("divCurrentLong").innerHTML = currentLong.toFixed(6);
+
+        }
+
+
+
+        // ---------------------------------------------------------------------------------------
+        // name: calculateDistanceInMeters
+        // source: http://www.codecodex.com/wiki/Calculate_distance_between_two_points_on_a_globe
+        // note:    Don't change any of the code in this function!!
+        // ---------------------------------------------------------------------------------------
+        function calculateDistanceInMeters(parLat1, parLon1, parLat2, parLon2) {
+
+            console.log("calculateDistanceInMeters function called!");
+            console.log("parLat1 = " + parLat1);
+            console.log("parLon1 = " + parLon1);
+            console.log("parLat2 = " + parLat2);
+            console.log("parLon2 = " + parLon2);
+
+            var distanceInKiloMeters,
+                distanceInMeters;
+
+            //Code retrieved from source cited above - don't modify
+            //-------------------------------------------------------
+            var R = 6371; // km
+            var dLat = (parLat2 - parLat1) * Math.PI / 180;
+            var dLon = (parLon2 - parLon1) * Math.PI / 180;
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(parLat1 * Math.PI / 180) * Math.cos(parLat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            var c = 2 * Math.asin(Math.sqrt(a));
+            distanceInKiloMeters = R * c;
+            //---------------------------------------------------------
+            //end of code to not modify
+
+            distanceInMeters = distanceInKiloMeters * 1000;
+
+            return distanceInMeters;
+        }
+
+
+
+        //-------------------------------------------------------------------------------
+        // Name: calculateDistanceInFeet()
+        //-------------------------------------------------------------------------------
+
+        function calculateDistanceInFeet(distanceInMeters) {
+            console.log("calculateDistanceInFeet() function called");
+            console.log("distanceInMeters = " + distanceInMeters);
+
+            //1. Declare variables
+            var distanceInFeet;
+
+            //2. Get values
+
+            //3. Calculation
+            distanceInFeet = distanceInMeters * 3.28084;
+
+            //4. Display
+            return distanceInFeet;
+
+        }
+
+        //-------------------------------------------------------------------------------
+        // Name: calculateDistance()
+        //-------------------------------------------------------------------------------
+
+        function calculateDistance() {
+            console.log("calculateDistance() function called")
+
+            //1. Declare variables
+            var baseballFieldLat,
+                baseballFiledLong,
+                tennisCourtsLat,
+                tennisCourtsLong,
+                baseballDistanceInMeters,
+                baseballDistanceInFeet,
+                tennisDistanceInMeters,
+                tennisDistanceInFeet;
+
+            //2. Get values
+            baseballFieldLat = 35.301411;
+            console.log("baseballFieldLat = " + baseballFieldLat);
+
+            baseballFiledLong = -83.181315;
+            console.log("baseballFiledLong = " + baseballFiledLong);
+
+            tennisCourtsLat = 35.311894;
+            console.log("tennisCourtsLat = " + tennisCourtsLat);
+
+            tennisCourtsLong = -83.185387;
+            console.log("tennisCourtsLong = " + tennisCourtsLong);
+
+            //3. Calculation
+            baseballDistanceInMeters = calculateDistanceInMeters(currentLat, currentLong,
+                                                            baseballFieldLat, baseballFiledLong);
+            console.log("baseballDistaneInMeters = " + baseballDistanceInMeters);
+
+            baseballDistanceInFeet = calculateDistanceInFeet(baseballDistanceInMeters);
+            console.log("baseballDistanceInFeet = " + baseballDistanceInFeet);
+
+            tennisDistanceInMeters = calculateDistanceInMeters(currentLat, currentLong,
+                                                                tennisCourtsLat, tennisCourtsLong);
+            console.log("tennisDistanceInMeters = " + tennisDistanceInMeters);
+
+            tennisDistanceInFeet = calculateDistanceInFeet(tennisDistanceInMeters);
+            console.log("tennisDistanceInFeet = " + tennisDistanceInFeet);
+            
+            //4. Display
+            document.getElementById("divDistanceToBaseballField").innerHTML = baseballDistanceInFeet.toFixed(0) + " " + "feet";
+            document.getElementById("divDistanceToTennisCourts").innerHTML = tennisDistanceInFeet.toFixed(0) + " " + "feet";
+            
+            if (baseballDistanceInFeet < tennisDistanceInFeet) {
+                document.getElementById("divAnswer").innerHTML = "You are currently closer to the Baseball Field!";
+            } else {
+                document.getElementById("divAnswer").innerHTML = "You are currently closer to the Tennis Courts!";
+            }
+        }
+
+    </script>
+</head>
+<body onload="displayCurrentLocation()">
+
+    <form>
+
+        <h1><center>Project 4 by Tuyen Tram</center></h1>
+
+        <div id="myDiv">
+            <table>
+                <tr id="myHeading">
+                    <td>
+                        Place
+                    </td>
+
+                    <td>
+                        Latitude
+                    </td>
+
+                    <td>
+                        Longitude
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="myCellTextColor">
+                        Current Location
+                    </td>
+
+                    <td class ="myCellTextColor">
+                        <div id="divCurrentLat"></div>
+                    </td>
+
+                    <td class="myCellTextColor">
+                        <div id="divCurrentLong"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+
+                    <td>
+                        <input type="button"
+                               id="butCalculateDistance"
+                               value="Calculate Distance"
+                               onclick="calculateDistance()" />
+                    </td>
+
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td class="myCellTextColor">
+                        Distance to Baseball Field
+                    </td>
+
+                    <td class="myCellTextColor">
+                        <div id="divDistanceToBaseballField"></div>
+                    </td>
+
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td class="myCellTextColor">
+                        Distance to Tennis Courts
+                    </td>
+
+                    <td class="myCellTextColor">
+                        <div id="divDistanceToTennisCourts"></div>
+                    </td>
+
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+
+                    <td colspan="2" id="myAnswerTextColor">
+                        <div id="divAnswer"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+
+</body>
+</html>
