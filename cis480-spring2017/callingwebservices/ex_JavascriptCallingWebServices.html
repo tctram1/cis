@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Javascript Calling Web Services</title>
+	<meta charset="utf-8" />
+
+    <!--Set attributes of view port-->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--Link to bootstrap.css file-->
+    <link rel="stylesheet" href="bootstrap.css" />
+
+    <!--Link to jQuery code library-->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <script>
+
+        //--------------------------------------------------------------------------
+        // name: ready()
+        //--------------------------------------------------------------------------
+        $(document).ready(function () {
+
+            console.log("Inside ready function");
+
+            //Wire up button event handlers
+            $("#butCallWebService").on("click", callWebService);
+
+        });
+
+        //--------------------------------------------------------------------------
+        // name: callWebService()
+        //--------------------------------------------------------------------------
+        function callWebService() {
+
+            var countryCode;
+
+            countryCode = $("#txtLookup").val();
+            console.log("countryCode = " + countryCode);
+
+            //Build URI for web service call
+            var uriString = "http://services.groupkt.com/country/search?text=" + countryCode;
+            console.log("uriString = " + uriString);
+
+            //a.jax
+            $.ajax(
+                {
+                    url: uriString,
+                    contenType: "applincation/x-www-form-urlencode; charset=UTF-8",
+                    dataType: "json",
+                    success: cb_Call_Success
+            
+                }
+            );
+        }
+            
+        //--------------------------------------------------------------------------
+        // name: cb_Call_Success()
+        //--------------------------------------------------------------------------
+        function cb_Call_Success(retrievedObject) {
+            console.log("Inside cb_Call_Success function");
+            console.dir(retrievedObject);
+
+            var loopCounter,
+                numberOfElementsInArray,
+                resultsArray = [],
+                countryName,
+                countryCode_2digit,
+                countryCode_3digit,
+                tableString,
+                tableRowString;
+
+            //Get info for returned object
+            resultsArray = retrievedObject.RestResponse.result;
+            console.dir(resultsArray);
+
+            numberOfElementsInArray = resultsArray.length;
+            console.log("numberOfElementsInArray = " + numberOfElementsInArray);
+
+            //Start table before loop
+            tableString = "<table class='table table-striped table-bordered'>" +
+                            "<thead class='thead-inverse'>" +
+                                "<tr>" +
+                                    "<th>Country Name</th>" +
+                                    "<th>2 Digit <br> Country Code</th>" +
+                                    "<th>3 Digit <br> Country Code</th>" +
+                                "</tr>" +
+                            "</thead>" +
+                            "<tbody>";
+
+            //Loop through Array and build display string
+            for (loopCounter = 0; loopCounter < numberOfElementsInArray; loopCounter++) {
+                console.log("loopCounter" + loopCounter);
+
+                countryName = resultsArray[loopCounter].name;
+                console.log("countryName = " + countryName);
+
+                countryCode_2digit = resultsArray[loopCounter].alpha2_code;
+                console.log("countryCode_2digit = " + countryCode_2digit);
+
+                countryCode_3digit = resultsArray[loopCounter].alpha3_code;
+                console.log("countryCode_3digit = " + countryCode_3digit);
+
+                tableRowString = "<tr>" +
+                                    "<td>" + countryName + "</td>" +
+                                    "<td>" + countryCode_2digit + "</td>" +
+                                    "<td>" + countryCode_3digit + "</td>" +
+                                "</tr>";
+
+                tableString = tableString + tableRowString;
+            }
+
+            //Finish table after loop
+            tableString = tableString + "</tbody></table>";
+
+            //Display
+            $("#resultsDisplay").html(tableString);
+        }
+
+    </script>
+
+</head>
+<body>
+    <!--Container-->
+    <div class="container">
+
+        <!--Jumbotron-->
+        <div class="jumbotron text-center">
+            <h2>Ex 1 - Calling a Web Service</h2>
+            <span class="lead">Test uri:  http://services.groupkt.com/country/search?text=un </span>
+        </div>
+
+        <!--Form-->
+        <form>
+            <!--Textbox-->
+            <div class="form-group">
+                <label for="txtLookup">
+                    Enter part or all of a two or three digit country code!
+                </label>
+                <input type="text" class="form-control" id="txtLookup" placeholder="Entry Country Code" />
+            </div>
+
+            <!--Button-->
+            <div class="text-center">
+                <button type="button" id="butCallWebService">
+                    Country Lookup
+                </button>
+            </div>
+
+            <!--Display Result-->
+            <h4 id="resultsDisplay" class="text-success"></h4>
+
+            <!--Reference-->
+            <h5>
+                Reference:
+                <a href="http://www.groupkt.com/post/c9b0ccb9/country-and-other-related-rest-webservices.htm">
+                    http://www.groupkt.com/post/c9b0ccb9/country-and-other-related-rest-webservices.htm
+                </a>
+                <span>(The specific Web Service Description is: #4. REST web-service to search country by 3 character ISO code or 2 character ISO code or country name)</span>
+            </h5>
+
+            <h4>
+                Bootswatch Theme: <i>United</i>
+            </h4>
+
+        </form>
+    </div>
+    <!--End of Container-->
+</body>
+</html>
