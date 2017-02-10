@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Ex 23 - For Loops</title>
+	<meta charset="utf-8" />
+
+    <!--Set attributes of view port-->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--Link to bootstrap.css file-->
+    <link rel="stylesheet" href="bootstrap.css" />
+
+    <!--Link to jQuery code library-->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <style>
+        #spanDisplayAnnualSales {
+            font-weight: bold;
+            font-size: x-large;
+            margin-left: 20px;
+        }
+
+        #spanDisplayAverageSales {
+            font-weight: bold;
+            font-size: x-large;
+            margin-left: 20px;
+        }
+    </style>
+
+    <script>
+
+        //Global Array
+        var monthlySales = []; //empyt array
+
+
+        //--------------------------------------------------------------------------
+        // name: ready()
+        //--------------------------------------------------------------------------
+        $(document).ready(function () {
+
+            console.log("ready() function called!");
+
+            //Wire up button event handlers
+            $("#butDisplayAnnualSales").on("click", displayAnnualSales);
+            $("#butDisplayAverageSales").on("click", displayAverageSales);
+
+            //Fill the Global Array
+            fillArray();
+
+        });
+
+
+        //--------------------------------------------------------------------------
+        // name: fillArray()
+        //--------------------------------------------------------------------------
+        function fillArray() {
+            console.log("fillArray() function called!");
+
+            //Fill Array
+            monthlySales[0] = 30000;
+            monthlySales[1] = 10000;
+            monthlySales[2] = 15000;
+            monthlySales[3] = 20000;
+            monthlySales[4] = 20000;
+            monthlySales[5] = 25000;
+            monthlySales[6] = 22000;
+            monthlySales[7] = 80000;
+            monthlySales[8] = 20000;
+            monthlySales[9] = 20000;
+            monthlySales[10] = 40000;
+            monthlySales[11] = 60000;
+
+            console.dir(monthlySales);
+
+        }
+
+
+        //--------------------------------------------------------------------------
+        // name: displayAnnualSales()
+        //--------------------------------------------------------------------------
+        function displayAnnualSales() {
+            console.log("displayAnnualSales() function called!")
+
+            //1. Declare Variables
+            var annualSales = 0,
+                numberOfElementsInArray,
+                loopCounter,
+                displayString;
+
+            //2. Get Values
+
+            //3. Calculation
+            numberOfElementsInArray = monthlySales.length;
+
+            for (loopCounter = 0; loopCounter < numberOfElementsInArray; loopCounter++) {
+                console.log("Value of Array at index " + loopCounter + "is" + monthlySales[loopCounter]);
+
+                //Add this value to annualSales
+                annualSales = annualSales + monthlySales[loopCounter];
+                console.log("annualSales = " + annualSales);
+            }
+
+            //4. Display Result
+            displayString = "$" + numberWithCommas(annualSales.toFixed(2));
+
+            $("#spanDisplayAnnualSales").html(displayString);
+
+        }
+
+
+        //--------------------------------------------------------------------------
+        // name: displayAverageSales()
+        //--------------------------------------------------------------------------
+        function displayAverageSales() {
+            console.log("displayAverageSales() function called!")
+
+            //1. Declare Variables
+            var annualSales = 0,
+                averageSales,
+                numberOfElementsInArray,
+                loopCounter,
+                displayString;
+
+            //2. Get Values
+
+            //3. Calculation
+            numberOfElementsInArray = monthlySales.length;
+
+            for (loopCounter = 0; loopCounter < numberOfElementsInArray; loopCounter++) {
+                console.log("Value of Array at index " + loopCounter + "is" + monthlySales[loopCounter]);
+
+                //Add this value to annualSales
+                annualSales = annualSales + monthlySales[loopCounter];
+                console.log("annualSales = " + annualSales);
+            }
+
+            averageSales = annualSales / 12;
+            console.log("averageSales = " + averageSales);
+
+            //4. Display Result
+            displayString = "$" + numberWithCommas(averageSales.toFixed(2));
+
+            $("#spanDisplayAverageSales").html(displayString);
+
+        }
+
+
+        //--------------------------------------------------------------------------
+        // name: numberWithCommas
+        // source: http://stackoverflow.com/questions/2901102/how-to-print-number-with-commas-as-thousands-separators-in-javascript
+        //--------------------------------------------------------------------------
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",");
+            }
+
+    </script>
+
+</head>
+<body onload="fillArray()">
+
+    <!--Container-->
+    <div class="container">
+
+        <!--Jumbotron-->
+        <div class="jumbotron">
+            <h1>Exercise 23 - For Loops</h1>
+            <span>ForLoop with Array</span>
+        </div>
+
+        <form>
+
+            <!--Diplsay Annual Sales Button-->
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" id="butDisplayAnnualSales">
+                    Display Annual Sales
+                </button>
+
+                <span class="text-primary" id="spanDisplayAnnualSales"></span>
+            </div>
+
+            <!--Diplsay Average Sales Button-->
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" id="butDisplayAverageSales">
+                    Display Average Sales
+                </button>
+
+                <span class="text-primary" id="spanDisplayAverageSales"></span>
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+</html>
